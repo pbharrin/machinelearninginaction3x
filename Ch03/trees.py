@@ -61,7 +61,7 @@ def majorityCnt(classList):
     for vote in classList:
         if vote not in classCount.keys(): classCount[vote] = 0
         classCount[vote] += 1
-    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
+    sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
 
 def createTree(dataSet,labels):
@@ -82,7 +82,7 @@ def createTree(dataSet,labels):
     return myTree                            
     
 def classify(inputTree,featLabels,testVec):
-    firstStr = inputTree.keys()[0]
+    firstStr = list(inputTree)[0]
     secondDict = inputTree[firstStr]
     featIndex = featLabels.index(firstStr)
     key = testVec[featIndex]
@@ -94,12 +94,12 @@ def classify(inputTree,featLabels,testVec):
 
 def storeTree(inputTree,filename):
     import pickle
-    fw = open(filename,'w')
+    fw = open(filename,'wb')
     pickle.dump(inputTree,fw)
     fw.close()
     
 def grabTree(filename):
     import pickle
-    fr = open(filename)
+    fr = open(filename, 'rb')
     return pickle.load(fr)
     
