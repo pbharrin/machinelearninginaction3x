@@ -16,5 +16,5 @@ You will need numpy to run the examples in this book.  To install NumPy do the f
 `pip3 install numpy`.  Pip3 and Pip may be the same (they are the same in my Virtual env, so you may only need to run `pip install numpy`.  Check the paths of with `which pip` and `which pip3`.  
 
 Chapters currently working with Python 3.X:
- ch2   done by YoungSeon.Ahn 
- ch3   done by YoungSeon.Ahn 
+ - ch2   done by YoungSeon.Ahn 
+ - ch3   done by YoungSeon.Ahn 
