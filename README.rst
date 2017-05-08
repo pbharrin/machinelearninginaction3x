@@ -17,3 +17,4 @@ You will need numpy to run the examples in this book.  To install NumPy do the f
 
 Chapters currently working with Python 3.X:
  ch2   done by YoungSeon.Ahn 
+ ch3   done by YoungSeon.Ahn 
