@@ -78,3 +78,7 @@ python3 ./Ch04/bayes.py
 ```
 
 Congrats, we've got everything all setup!
+
+----------------------
+Notes on Chapter Installations:
+* Chapter 04  may alternatively use pip3 to install feedparser: `pip3 install feedparser`
