@@ -3,7 +3,7 @@ Created on Oct 6, 2010
 
 @author: Peter
 '''
-from numpy import *
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
@@ -16,8 +16,8 @@ markers =[]
 colors =[]
 fw = open('testSet.txt','w')
 for i in range(n):
-    [r0,r1] = random.standard_normal(2)
-    myClass = random.uniform(0,1)
+    [r0,r1] = np.random.standard_normal(2)
+    myClass = np.random.uniform(0,1)
     if (myClass <= 0.5):
         fFlyer = r0 + 9.0
         tats = 1.0*r1 + fFlyer - 9.0
