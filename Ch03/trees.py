@@ -12,7 +12,7 @@ def createDataSet():
                [1, 0, 'no'],
                [0, 1, 'no'],
                [0, 1, 'no']]
-    labels = ['no surfacing','flippers']
+    labels = ['no surfacing', 'flippers']
     #change to discrete values
     return dataSet, labels
 
@@ -26,9 +26,9 @@ def calcShannonEnt(dataSet):
     shannonEnt = 0.0
     for key in labelCounts:
         prob = float(labelCounts[key])/numEntries
-        shannonEnt -= prob * log(prob,2) #log base 2
+        shannonEnt -= prob * log(prob, 2) #log base 2
     return shannonEnt
-    
+
 def splitDataSet(dataSet, axis, value):
     retDataSet = []
     for featVec in dataSet:
@@ -37,7 +37,7 @@ def splitDataSet(dataSet, axis, value):
             reducedFeatVec.extend(featVec[axis+1:])
             retDataSet.append(reducedFeatVec)
     return retDataSet
-    
+
 def chooseBestFeatureToSplit(dataSet):
     numFeatures = len(dataSet[0]) - 1      #the last column is used for the labels
     baseEntropy = calcShannonEnt(dataSet)
@@ -49,7 +49,7 @@ def chooseBestFeatureToSplit(dataSet):
         for value in uniqueVals:
             subDataSet = splitDataSet(dataSet, i, value)
             prob = len(subDataSet)/float(len(dataSet))
-            newEntropy += prob * calcShannonEnt(subDataSet)     
+            newEntropy += prob * calcShannonEnt(subDataSet)
         infoGain = baseEntropy - newEntropy     #calculate the info gain; ie reduction in entropy
         if (infoGain > bestInfoGain):       #compare this to the best gain so far
             bestInfoGain = infoGain         #if better than current best, set to best
@@ -64,9 +64,9 @@ def majorityCnt(classList):
     sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
 
-def createTree(dataSet,labels):
+def createTree(dataSet, labels):
     classList = [example[-1] for example in dataSet]
-    if classList.count(classList[0]) == len(classList): 
+    if classList.count(classList[0]) == len(classList):
         return classList[0]#stop splitting when all of the classes are equal
     if len(dataSet[0]) == 1: #stop splitting when there are no more features in dataSet
         return majorityCnt(classList)
@@ -78,28 +78,28 @@ def createTree(dataSet,labels):
     uniqueVals = set(featValues)
     for value in uniqueVals:
         subLabels = labels[:]       #copy all of labels, so trees don't mess up existing labels
-        myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet, bestFeat, value),subLabels)
-    return myTree                            
-    
-def classify(inputTree,featLabels,testVec):
+        myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet, bestFeat, value), subLabels)
+    return myTree
+
+def classify(inputTree, featLabels, testVec):
     firstStr = list(inputTree)[0]
     secondDict = inputTree[firstStr]
     featIndex = featLabels.index(firstStr)
     key = testVec[featIndex]
     valueOfFeat = secondDict[key]
-    if isinstance(valueOfFeat, dict): 
+    if isinstance(valueOfFeat, dict):
         classLabel = classify(valueOfFeat, featLabels, testVec)
     else: classLabel = valueOfFeat
     return classLabel
 
-def storeTree(inputTree,filename):
+def storeTree(inputTree, filename):
     import pickle
-    fw = open(filename,'wb')
-    pickle.dump(inputTree,fw)
+    fw = open(filename, 'wb')
+    pickle.dump(inputTree, fw)
     fw.close()
-    
+
 def grabTree(filename):
     import pickle
     fr = open(filename, 'rb')
     return pickle.load(fr)
-    
+
