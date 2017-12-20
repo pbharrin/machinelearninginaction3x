@@ -8,7 +8,7 @@ from numpy import *
 def loadDataSet(fileName, delim='\t'):
     fr = open(fileName)
     stringArr = [line.strip().split(delim) for line in fr.readlines()]
-    datArr = [map(float,line) for line in stringArr]
+    datArr = [list(map(float,line)) for line in stringArr]
     return mat(datArr)
 
 def pca(dataMat, topNfeat=9999999):
