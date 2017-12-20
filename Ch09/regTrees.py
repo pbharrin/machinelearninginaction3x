@@ -10,13 +10,13 @@ def loadDataSet(fileName):      #general function to parse tab -delimited floats
     fr = open(fileName)
     for line in fr.readlines():
         curLine = line.strip().split('\t')
-        fltLine = map(float,curLine) #map all elements to float()
+        fltLine = list(map(float,curLine)) #map all elements to float()
         dataMat.append(fltLine)
     return dataMat
 
 def binSplitDataSet(dataSet, feature, value):
-    mat0 = dataSet[nonzero(dataSet[:,feature] > value)[0],:][0]
-    mat1 = dataSet[nonzero(dataSet[:,feature] <= value)[0],:][0]
+    mat0 = dataSet[nonzero(dataSet[:,feature] > value)[0],:]
+    mat1 = dataSet[nonzero(dataSet[:,feature] <= value)[0],:]
     return mat0,mat1
 
 def regLeaf(dataSet):#returns the value used for each leaf
@@ -55,7 +55,7 @@ def chooseBestSplit(dataSet, leafType=regLeaf, errType=regErr, ops=(1,4)):
     S = errType(dataSet)
     bestS = inf; bestIndex = 0; bestValue = 0
     for featIndex in range(n-1):
-        for splitVal in set(dataSet[:,featIndex]):
+        for splitVal in set(dataSet[:,featIndex].T.tolist()[0]):
             mat0, mat1 = binSplitDataSet(dataSet, featIndex, splitVal)
             if (shape(mat0)[0] < tolN) or (shape(mat1)[0] < tolN): continue
             newS = errType(mat0) + errType(mat1)
@@ -105,7 +105,7 @@ def prune(tree, testData):
         treeMean = (tree['left']+tree['right'])/2.0
         errorMerge = sum(power(testData[:,-1] - treeMean,2))
         if errorMerge < errorNoMerge: 
-            print "merging"
+            print("merging")
             return treeMean
         else: return tree
     else: return tree
