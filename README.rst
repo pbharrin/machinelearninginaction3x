@@ -19,3 +19,5 @@ Chapters currently working with Python 3.X:
  - ch2   done by YoungSeon.Ahn
  - ch3   done by YoungSeon.Ahn
  - ch4   done by Angel Ortega
+ - ch13   done by shenyyi
+ - ch14   done by shenyyi
