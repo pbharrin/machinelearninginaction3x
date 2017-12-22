@@ -22,7 +22,7 @@ class treeNode:
         self.count += numOccur
         
     def disp(self, ind=1):
-        print '  '*ind, self.name, ' ', self.count
+        print('  '*ind, self.name, ' ', self.count)
         for child in self.children.values():
             child.disp(ind+1)
 
@@ -32,7 +32,8 @@ def createTree(dataSet, minSup=1): #create FP-tree from dataset but don't mine
     for trans in dataSet:#first pass counts frequency of occurance
         for item in trans:
             headerTable[item] = headerTable.get(item, 0) + dataSet[trans]
-    for k in headerTable.keys():  #remove items not meeting minSup
+    headerTableCopy = headerTable.copy()
+    for k in headerTableCopy.keys():  #remove items not meeting minSup
         if headerTable[k] < minSup: 
             del(headerTable[k])
     freqItemSet = set(headerTable.keys())
@@ -85,7 +86,7 @@ def findPrefixPath(basePat, treeNode): #treeNode comes from header table
     return condPats
 
 def mineTree(inTree, headerTable, minSup, preFix, freqItemList):
-    bigL = [v[0] for v in sorted(headerTable.items(), key=lambda p: p[1])]#(sort header table)
+    bigL = [v[0] for v in sorted(headerTable.items(), key=lambda p: p[0])]#(sort header table)
     for basePat in bigL:  #start from bottom of header table
         newFreqSet = preFix.copy()
         newFreqSet.add(basePat)
@@ -97,8 +98,8 @@ def mineTree(inTree, headerTable, minSup, preFix, freqItemList):
         myCondTree, myHead = createTree(condPattBases, minSup)
         #print 'head from conditional tree: ', myHead
         if myHead != None: #3. mine cond. FP-tree
-            #print 'conditional tree for: ',newFreqSet
-            #myCondTree.disp(1)            
+            print('conditional tree for: ',newFreqSet)
+            myCondTree.disp(1)            
             mineTree(myCondTree, myHead, minSup, newFreqSet, freqItemList)
 
 def loadSimpDat():
@@ -136,7 +137,7 @@ def getLotsOfTweets(searchStr):
     #you can get 1500 results 15 pages * 100 per page
     resultsPages = []
     for i in range(1,15):
-        print "fetching page %d" % i
+        print("fetching page %d" % i)
         searchResults = api.GetSearch(searchStr, per_page=100, page=i)
         resultsPages.append(searchResults)
         sleep(6)

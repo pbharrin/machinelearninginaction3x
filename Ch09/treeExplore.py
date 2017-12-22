@@ -1,6 +1,6 @@
 from numpy import *
 
-from Tkinter import *
+from tkinter import *
 import regTrees
 
 import matplotlib
@@ -20,7 +20,7 @@ def reDraw(tolS,tolN):
     else:
         myTree=regTrees.createTree(reDraw.rawDat, ops=(tolS,tolN))
         yHat = regTrees.createForeCast(myTree, reDraw.testDat)
-    reDraw.a.scatter(reDraw.rawDat[:,0], reDraw.rawDat[:,1], s=5) #use scatter for data set
+    reDraw.a.scatter(reDraw.rawDat[:,0].flatten().A[0], reDraw.rawDat[:,1].flatten().A[0], s=5) #use scatter for data set
     reDraw.a.plot(reDraw.testDat, yHat, linewidth=2.0) #use plot for yHat
     reDraw.canvas.show()
     
@@ -28,13 +28,13 @@ def getInputs():
     try: tolN = int(tolNentry.get())
     except: 
         tolN = 10 
-        print "enter Integer for tolN"
+        print("enter Integer for tolN")
         tolNentry.delete(0, END)
         tolNentry.insert(0,'10')
     try: tolS = float(tolSentry.get())
     except: 
         tolS = 1.0 
-        print "enter Float for tolS"
+        print("enter Float for tolS")
         tolSentry.delete(0, END)
         tolSentry.insert(0,'1.0')
     return tolN,tolS
